@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+
+int main() {
+    // Задаємо кількість команд та статистику перемог, нічиїх та поразок для кожної команди
+    int numTeams = 15;
+    std::vector<int> wins(numTeams);
+    std::vector<int> draws(numTeams);
+    std::vector<int> losses(numTeams);
+
+    // Заповнюємо статистику для кожної команди (в цьому прикладі використовуємо випадкові значення)
+    for (int i = 0; i < numTeams; i++) {
+        wins[i] = rand() % 20;    // Кількість перемог
+        draws[i] = rand() % 10;   // Кількість нічиїх
+        losses[i] = rand() % 15;  // Кількість поразок
+    }
+
+    // Знаходимо максимальні значення для кожної категорії
+    int maxWins = 0, maxDraws = 0, maxLosses = 0;
+    for (int i = 0; i < numTeams; i++) {
+        if (wins[i] > maxWins) {
+            maxWins = wins[i];
+        }
+        if (draws[i] > maxDraws) {
+            maxDraws = draws[i];
+        }
+        if (losses[i] > maxLosses) {
+            maxLosses = losses[i];
+        }
+    }
+
+    // Знаходимо команди, які мають максимальні значення для кожної категорії
+    std::cout << "Команди з максимальними значеннями:\n";
+    for (int i = 0; i < numTeams; i++) {
+        if (wins[i] == maxWins) {
+            std::cout << "Команда " << i + 1 << " має найбільше перемог: " << maxWins << " перемог\n";
+        }
+        if (draws[i] == maxDraws) {
+            std::cout << "Команда " << i + 1 << " має найбільше нічиїх: " << maxDraws << " нічиїх\n";
+        }
+        if (losses[i] == maxLosses) {
+            std::cout << "Команда " << i + 1 << " має найбільше поразок: " << maxLosses << " поразок\n";
+        }
+    }
+
+    return 0;
+}
