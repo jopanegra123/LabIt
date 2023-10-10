@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <cstdlib> // Для функції rand()
+#include <ctime>   // Для генерації випадкових чисел
+
+int main() {
+    // Включаємо генератор випадкових чисел та ініціалізуємо його випадковим значенням
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
+    int rows, cols;
+
+    std::cout << "Введіть кількість рядків: ";
+    std::cin >> rows;
+    std::cout << "Введіть кількість стовпців: ";
+    std::cin >> cols;
+
+    // Створюємо двовимірний масив, заповнюємо його випадковими значеннями та виводимо його
+    std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            matrix[i][j] = std::rand() % 100; // Генеруємо випадкові числа від 0 до 99
+        }
+    }
+
+    for (int j = 0; j < cols; j++) {
+        if (j % 2 == 0) { // Парний стовпець
+            int maxElement = matrix[0][j];
+            for (int i = 1; i < rows; i++) {
+                if (matrix[i][j] > maxElement) {
+                    maxElement = matrix[i][j];
+                }
+            }
+            std::cout << "Максимальний елемент для парного стовпця " << j << ": " << maxElement << std::endl;
+        } else { // Непарний стовпець
+            int minElement = matrix[0][j];
+            for (int i = 1; i < rows; i++) {
+                if (matrix[i][j] < minElement) {
+                    minElement = matrix[i][j];
+                }
+            }
+            std::cout << "Мінімальний елемент для непарного стовпця " << j << ": " << minElement << std::endl;
+        }
+    }
+
+    return 0;
+}
