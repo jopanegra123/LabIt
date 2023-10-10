@@ -1,0 +1,78 @@
+# LabIt
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+
+struct RestaurantOrder {
+    int tableNumber;
+    std::string dishName;
+    double dishPrice;
+    std::string waiterLastName;
+};
+
+// Функція для сортування за прізвищем офіціанта
+bool sortByWaiterLastName(const RestaurantOrder& order1, const RestaurantOrder& order2) {
+    return order1.waiterLastName < order2.waiterLastName;
+}
+
+// Функція для сортування за зростанням ціни страви
+bool sortByDishPrice(const RestaurantOrder& order1, const RestaurantOrder& order2) {
+    return order1.dishPrice < order2.dishPrice;
+}
+
+int main() {
+    int n; // Кількість записів
+    std::cout << "Введіть кількість записів: ";
+    std::cin >> n;
+
+    std::vector<RestaurantOrder> orders(n);
+
+    // Введення даних у масив
+    for (int i = 0; i < n; i++) {
+        std::cout << "Введіть дані для замовлення #" << i + 1 << ":" << std::endl;
+        std::cout << "Номер столу: ";
+        std::cin >> orders[i].tableNumber;
+        std::cout << "Назва страви: ";
+        std::cin.ignore(); // Очищення буфера вводу
+        std::getline(std::cin, orders[i].dishName);
+        std::cout << "Ціна страви: ";
+        std::cin >> orders[i].dishPrice;
+        std::cout << "Прізвище офіціанта: ";
+        std::cin.ignore(); // Очищення буфера вводу
+        std::getline(std::cin, orders[i].waiterLastName);
+    }
+
+    // Сортування за прізвищем офіціанта
+    std::sort(orders.begin(), orders.end(), sortByWaiterLastName);
+
+    // Виведення інформації про всі столи
+    std::cout << "Інформація про всі столи:" << std::endl;
+    for (const auto& order : orders) {
+        std::cout << "Стіл #" << order.tableNumber << ": " << order.dishName << " (Ціна: " << order.dishPrice
+                  << ", Офіціант: " << order.waiterLastName << ")" << std::endl;
+    }
+
+    // Пошук страви за назвою
+    std::string searchDishName;
+    std::cout << "Введіть назву страви для пошуку: ";
+    std::cin.ignore(); // Очищення буфера вводу
+    std::getline(std::cin, searchDishName);
+
+    bool found = false;
+
+    // Пошук і виведення інформації про столи з вказаною стравою
+    for (const auto& order : orders) {
+        if (order.dishName == searchDishName) {
+            std::cout << "Стіл #" << order.tableNumber << ": " << order.dishName << " (Ціна: " << order.dishPrice
+                      << ", Офіціант: " << order.waiterLastName << ")" << std::endl;
+            found = true;
+        }
+    }
+
+    if (!found) {
+        std::cout << "Страва \"" << searchDishName << "\" не знайдена на жодному столі." << std::endl;
+    }
+
+    return 0;
+}
