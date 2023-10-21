@@ -1,0 +1,38 @@
+#include <iostream>
+
+// Функція для обчислення x^n за бінарним алгоритмом
+double binaryExponentiation(double x, long long n) {
+    double result = 1.0;
+
+    while (n > 0) {
+        if (n % 2 == 1) {
+            // Якщо останній біт n рівний 1, множимо x на результат
+            result *= x;
+        }
+        // Піднесення x до квадрату
+        x *= x;
+        // Зсуваємо n вправо на один біт (еквівалентно діленню на 2)
+        n /= 2;
+    }
+
+    return result;
+}
+
+int main() {
+    double x;
+    long long n;
+
+    std::cout << "Введіть значення x: ";
+    std::cin >> x;
+    std::cout << "Введіть значення n (натуральне число): ";
+    std::cin >> n;
+
+    if (n < 0) {
+        std::cout << "Помилка: n повинне бути невід'ємним цілим числом." << std::endl;
+    } else {
+        double result = binaryExponentiation(x, n);
+        std::cout << "Результат обчислення " << x << "^" << n << " дорівнює " << result << std::endl;
+    }
+
+    return 0;
+}
